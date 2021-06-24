@@ -1,6 +1,7 @@
-package com.herms.hermscoder.model;
+package com.herms.hermscoder.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.herms.hermscoder.model.entity.Experience;
 import com.herms.hermscoder.utils.ConvertUtils;
 
 import javax.persistence.Lob;

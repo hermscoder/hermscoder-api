@@ -1,11 +1,13 @@
 package com.herms.hermscoder.service;
 
-import com.herms.hermscoder.model.Profile;
-import com.herms.hermscoder.model.ProfileDTO;
+import com.herms.hermscoder.model.entity.Profile;
+import com.herms.hermscoder.model.dto.ProfileDTO;
 import com.herms.hermscoder.repository.ProfileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -36,12 +38,9 @@ public class ProfileServiceImpl implements BlogService<ProfileDTO> {
 
     @Override
     public ProfileDTO findById(Long id) {
-        ProfileDTO dto = null;
-        Profile entity = profileRepository.findById(id).orElse(null);
-        if(entity != null) {
-            dto = new ProfileDTO(entity);
-        }
-        return dto;
+        Profile entity = profileRepository.findById(id).orElseThrow(() ->
+                new EntityNotFoundException("Profile for id " + id + " not found!"));
+        return new ProfileDTO(entity);
     }
 
     @Override
@@ -60,5 +59,10 @@ public class ProfileServiceImpl implements BlogService<ProfileDTO> {
         ProfileDTO dto = findById(id);
         dto.setActive(false);
         update(dto);
+    }
+
+    @Transactional
+    protected Profile findByUserId(Long id) {
+        return profileRepository.findByUser_Id(id);
     }
 }

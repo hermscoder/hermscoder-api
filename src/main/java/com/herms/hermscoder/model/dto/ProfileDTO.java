@@ -1,10 +1,12 @@
-package com.herms.hermscoder.model;
+package com.herms.hermscoder.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.herms.hermscoder.model.entity.Profile;
 import com.herms.hermscoder.utils.ConvertUtils;
 
 import javax.persistence.Lob;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,6 +25,7 @@ public class ProfileDTO {
     private String description;
 
     private boolean active;
+    private UserDTO user;
 
     private List<ExperienceDTO> experiencesList;
 
@@ -39,6 +42,7 @@ public class ProfileDTO {
         this.description = profile.getDescription();
         this.active = "Y".equals(profile.getActive());
         this.experiencesList = profile.getExperiencesList().stream().map(ExperienceDTO::new).collect(Collectors.toList());
+        this.user = new UserDTO(profile.getUser());
     }
 
     public Profile toProfile(){
@@ -50,6 +54,7 @@ public class ProfileDTO {
         profile.setJobTitle(this.jobTitle);
         profile.setDescription(this.description);
         profile.setActive(this.active ? "Y" : "N");
+        profile.setUser(this.user.toUser());
         profile.setExperiencesList(this.experiencesList.stream().map(ExperienceDTO::toExperience).collect(Collectors.toList()));
         return profile;
     }
@@ -116,5 +121,13 @@ public class ProfileDTO {
 
     public void setExperiencesList(List<ExperienceDTO> experiencesList) {
         this.experiencesList = experiencesList;
+    }
+
+    public UserDTO getUser() {
+        return user;
+    }
+
+    public void setUser(UserDTO user) {
+        this.user = user;
     }
 }

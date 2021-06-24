@@ -1,6 +1,6 @@
 package com.herms.hermscoder.resource;
 
-import com.herms.hermscoder.model.PostDTO;
+import com.herms.hermscoder.model.dto.PostDTO;
 import com.herms.hermscoder.service.PostServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

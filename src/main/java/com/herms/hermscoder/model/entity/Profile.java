@@ -1,4 +1,4 @@
-package com.herms.hermscoder.model;
+package com.herms.hermscoder.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -33,6 +33,9 @@ public class Profile {
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Experience> experiencesList;
+
+    @OneToOne
+    private User user;
 
     public Profile() {
         experiencesList = new ArrayList<>();
@@ -100,5 +103,13 @@ public class Profile {
 
     public void setActive(String active) {
         this.active = active;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

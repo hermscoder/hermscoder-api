@@ -1,4 +1,4 @@
-package com.herms.hermscoder.model;
+package com.herms.hermscoder.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
