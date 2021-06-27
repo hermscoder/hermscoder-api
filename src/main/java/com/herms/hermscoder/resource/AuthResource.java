@@ -26,7 +26,7 @@ public class AuthResource {
     }
 
     @PostMapping("/login")
-    public AuthenticationResponse login(@RequestBody AuthenticationRequest authenticationRequest) {
-        return authService.login(authenticationRequest);
+    public ResponseEntity<AuthenticationResponse> login(@RequestBody AuthenticationRequest authenticationRequest) {
+        return ResponseEntity.ok(authService.login(authenticationRequest));
     }
 }

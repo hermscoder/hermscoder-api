@@ -4,6 +4,9 @@ public class AuthenticationRequest {
     private String email;
     private String password;
 
+    public AuthenticationRequest() {
+    }
+
     public String getEmail() {
         return email;
     }
