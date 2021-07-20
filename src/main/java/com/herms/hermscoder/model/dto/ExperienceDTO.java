@@ -2,6 +2,7 @@ package com.herms.hermscoder.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.herms.hermscoder.model.entity.Experience;
+import com.herms.hermscoder.model.entity.Profile;
 import com.herms.hermscoder.utils.ConvertUtils;
 
 import javax.persistence.Lob;
@@ -26,6 +27,9 @@ public class ExperienceDTO {
     @Lob
     private String description;
 
+    @NotNull
+    private Long profileId;
+
     public ExperienceDTO() {
     }
 
@@ -37,6 +41,7 @@ public class ExperienceDTO {
         this.endDate = ConvertUtils.localDateToString(experience.getEndDate());
         this.local = experience.getLocal();
         this.description = experience.getDescription();
+        this.profileId = experience.getProfile() != null ? experience.getProfile().getId() : null;
     }
 
     public Experience toExperience(){
@@ -48,7 +53,7 @@ public class ExperienceDTO {
         experience.setEndDate(ConvertUtils.stringToLocalDate(this.endDate));
         experience.setLocal(this.local);
         experience.setDescription(this.description);
-
+        experience.setProfile(new Profile(this.profileId));
         return experience;
     }
 

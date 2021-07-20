@@ -14,6 +14,9 @@ public class Media {
     private String url;
     private String publicId;
 
+    public Media() {
+    }
+
     public Media(String type, String url, String publicId) {
         this.type = type;
         this.url = url;

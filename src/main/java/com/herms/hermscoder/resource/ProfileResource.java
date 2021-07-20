@@ -16,6 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/profile")
 public class ProfileResource {
+    private static final int MAIN_PROFILE_IDENTIFIER = 0;
     @Autowired
     private ProfileServiceImpl profileService;
     @Autowired
@@ -28,7 +29,14 @@ public class ProfileResource {
 
     @GetMapping(path = "/{id}")
     public ResponseEntity<ProfileDTO> getById(@PathVariable(value = "id") long id) {
-        return ResponseEntity.ok(profileService.findById(id));
+        ProfileDTO profileDTO;
+        if(id == MAIN_PROFILE_IDENTIFIER) {
+            profileDTO = profileService.findByMainProfile();
+        } else {
+            profileDTO = profileService.findById(id);
+        }
+
+        return ResponseEntity.ok(profileDTO);
     }
 
     @PutMapping(path = "/{id}")

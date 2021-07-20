@@ -1,6 +1,7 @@
 package com.herms.hermscoder.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -26,19 +27,29 @@ public class Profile {
 
     private String jobTitle;
 
-    @Lob
+    @NotBlank
+    @Lob @Type(type = "org.hibernate.type.TextType")
     private String description;
 
     private String active;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Experience> experiencesList;
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Experience> experienceList;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Project> projectsList;
 
     @OneToOne
     private User user;
 
     public Profile() {
-        experiencesList = new ArrayList<>();
+        experienceList = new ArrayList<>();
+        projectsList = new ArrayList<>();
+    }
+
+    public Profile(Long id) {
+        this();
+        this.id = id;
     }
 
     public Long getId() {
@@ -89,12 +100,12 @@ public class Profile {
         this.description = description;
     }
 
-    public List<Experience> getExperiencesList() {
-        return experiencesList;
+    public List<Experience> getExperienceList() {
+        return experienceList;
     }
 
-    public void setExperiencesList(List<Experience> experiencesList) {
-        this.experiencesList = experiencesList;
+    public void setExperienceList(List<Experience> experienceList) {
+        this.experienceList = experienceList;
     }
 
     public String getActive() {
@@ -111,5 +122,13 @@ public class Profile {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public List<Project> getProjectsList() {
+        return projectsList;
+    }
+
+    public void setProjectsList(List<Project> projectsList) {
+        this.projectsList = projectsList;
     }
 }

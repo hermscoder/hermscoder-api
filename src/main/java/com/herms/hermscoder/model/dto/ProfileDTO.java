@@ -6,7 +6,6 @@ import com.herms.hermscoder.utils.ConvertUtils;
 
 import javax.persistence.Lob;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,16 +20,21 @@ public class ProfileDTO {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private String birthDate;
     private String jobTitle;
+
+    @NotBlank
     @Lob
     private String description;
 
     private boolean active;
     private UserDTO user;
 
-    private List<ExperienceDTO> experiencesList;
+    private List<ExperienceDTO> experienceList;
+
+    private List<ProjectDTO> projectsList;
 
     public ProfileDTO(){
-        experiencesList = new ArrayList<>();
+        experienceList = new ArrayList<>();
+        projectsList = new ArrayList<>();
     }
 
     public ProfileDTO(Profile profile){
@@ -41,7 +45,8 @@ public class ProfileDTO {
         this.jobTitle = profile.getJobTitle();
         this.description = profile.getDescription();
         this.active = "Y".equals(profile.getActive());
-        this.experiencesList = profile.getExperiencesList().stream().map(ExperienceDTO::new).collect(Collectors.toList());
+        this.experienceList = profile.getExperienceList().stream().map(ExperienceDTO::new).collect(Collectors.toList());
+        this.projectsList = profile.getProjectsList().stream().map(ProjectDTO::new).collect(Collectors.toList());
         this.user = new UserDTO(profile.getUser());
     }
 
@@ -55,7 +60,8 @@ public class ProfileDTO {
         profile.setDescription(this.description);
         profile.setActive(this.active ? "Y" : "N");
         profile.setUser(this.user.toUser());
-        profile.setExperiencesList(this.experiencesList.stream().map(ExperienceDTO::toExperience).collect(Collectors.toList()));
+        profile.setExperienceList(this.experienceList.stream().map(ExperienceDTO::toExperience).collect(Collectors.toList()));
+        profile.setProjectsList(this.projectsList.stream().map(ProjectDTO::toProject).collect(Collectors.toList()));
         return profile;
     }
 
@@ -115,12 +121,12 @@ public class ProfileDTO {
         this.active = active;
     }
 
-    public List<ExperienceDTO> getExperiencesList() {
-        return experiencesList;
+    public List<ExperienceDTO> getExperienceList() {
+        return experienceList;
     }
 
-    public void setExperiencesList(List<ExperienceDTO> experiencesList) {
-        this.experiencesList = experiencesList;
+    public void setExperienceList(List<ExperienceDTO> experienceList) {
+        this.experienceList = experienceList;
     }
 
     public UserDTO getUser() {
@@ -129,5 +135,13 @@ public class ProfileDTO {
 
     public void setUser(UserDTO user) {
         this.user = user;
+    }
+
+    public List<ProjectDTO> getProjectsList() {
+        return projectsList;
+    }
+
+    public void setProjectsList(List<ProjectDTO> projectsList) {
+        this.projectsList = projectsList;
     }
 }
