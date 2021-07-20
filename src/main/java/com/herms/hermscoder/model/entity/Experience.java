@@ -33,6 +33,9 @@ public class Experience {
     @Lob
     private String description;
 
+    @ManyToOne
+    private Profile profile;
+
     public Long getId() {
         return id;
     }
@@ -87,5 +90,13 @@ public class Experience {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Profile getProfile() {
+        return profile;
+    }
+
+    public void setProfile(Profile profile) {
+        this.profile = profile;
     }
 }
