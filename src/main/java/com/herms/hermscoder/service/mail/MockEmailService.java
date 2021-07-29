@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import javax.mail.internet.MimeMessage;
 
 @Service
+import javax.mail.internet.MimeMessage;
+
 public class MockEmailService extends AbstractEmailService {
     private static final Logger LOGGER = LoggerFactory.getLogger(MockEmailService.class);
 
