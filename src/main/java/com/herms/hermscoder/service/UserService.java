@@ -23,13 +23,14 @@ public class UserService {
     }
     @Transactional
     public Optional<User> findByEmail(String email, Set<Class> fetchPolicy){
-        User user = userRepository.findByEmail(email).get();
-        if(!fetchPolicy.isEmpty()){
+        Optional<User> userOptional = userRepository.findByEmail(email);
+        if(userOptional.isPresent() && !fetchPolicy.isEmpty()){
+            User user = userOptional.get();
             if(user != null && fetchPolicy.contains(Profile.class)) {
                 user.setProfile(profileService.findByUserId(user.getId()));
             }
         }
-        return Optional.of(user);
+        return userOptional;
     }
 
     public User save(User user) {

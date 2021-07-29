@@ -2,6 +2,7 @@ package com.herms.hermscoder.service;
 
 import com.herms.hermscoder.exception.HermsCoderException;
 import com.herms.hermscoder.exception.IncorrectUsernameOrPasswordException;
+import com.herms.hermscoder.exception.OperationNotAuthorizedException;
 import com.herms.hermscoder.model.AuthenticationResponse;
 import com.herms.hermscoder.model.dto.AuthenticationRequest;
 import com.herms.hermscoder.model.dto.ProfileDTO;
@@ -11,6 +12,7 @@ import com.herms.hermscoder.model.entity.Profile;
 import com.herms.hermscoder.model.entity.User;
 import com.herms.hermscoder.repository.UserRepository;
 import com.herms.hermscoder.utils.JwtUtil;
+import org.hibernate.NonUniqueResultException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -44,7 +46,7 @@ public class AuthService {
 
         try {
             userService.findByEmail(userRegistration.getEmail());
-        } catch (Exception ex) {
+        } catch (NonUniqueResultException ex) {
             throw new HermsCoderException("The email " + userRegistration.getEmail() + " is already associated to an existing account.");
         }
 
@@ -81,6 +83,15 @@ public class AuthService {
 
         return new AuthenticationResponse(jwtUtil.generateToken(userDetails),
                                             new UserDTO(user));
+    }
+
+    public AuthenticationResponse refreshToken(){
+        User user = getCurrentUser().orElseThrow(() -> new OperationNotAuthorizedException("Operation not Authorized!"));
+
+        final UserDetails userDetails = ((UserDetailsServiceImpl)userDetailsService).convertUserToUserDetails(user);
+
+        return new AuthenticationResponse(jwtUtil.generateToken(userDetails),
+                new UserDTO(user));
     }
 
     public Optional<User> getCurrentUser(){

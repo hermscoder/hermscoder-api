@@ -1,6 +1,10 @@
 package com.herms.hermscoder.resource;
 
+import com.herms.hermscoder.exception.HermsCoderException;
+import com.herms.hermscoder.model.dto.ProfileDTO;
 import com.herms.hermscoder.model.dto.ProjectDTO;
+import com.herms.hermscoder.service.AuthService;
+import com.herms.hermscoder.service.ProfileServiceImpl;
 import com.herms.hermscoder.service.ProjectServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -9,10 +13,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/project")
+@RequestMapping("{profile_id}/project")
 public class ProjectResource {
     @Autowired
     private ProjectServiceImpl projectService;
+    @Autowired
+    private ProfileServiceImpl profileService;
+    @Autowired
+    private AuthService authService;
 
     @GetMapping
     public ResponseEntity<List<ProjectDTO>> get() {
@@ -22,11 +30,6 @@ public class ProjectResource {
     @GetMapping(path = "/{id}")
     public ResponseEntity<ProjectDTO> getById(@PathVariable(value = "id") long id) {
         return ResponseEntity.ok(projectService.findById(id));
-    }
-
-    @PostMapping
-    public ResponseEntity<ProjectDTO> post(@RequestBody ProjectDTO dto) {
-        return ResponseEntity.ok(projectService.save(dto));
     }
 
     @PutMapping(path = "/{id}")

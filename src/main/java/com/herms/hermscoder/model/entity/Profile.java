@@ -33,10 +33,10 @@ public class Profile {
 
     private String active;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = {CascadeType.REFRESH, CascadeType.REMOVE}, orphanRemoval = true)
     private List<Experience> experienceList;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = {CascadeType.REFRESH, CascadeType.REMOVE}, orphanRemoval = true)
     private List<Project> projectsList;
 
     @OneToOne

@@ -112,4 +112,12 @@ public class ExperienceDTO {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public Long getProfileId() {
+        return profileId;
+    }
+
+    public void setProfileId(Long profileId) {
+        this.profileId = profileId;
+    }
 }

@@ -42,7 +42,7 @@ public class ProjectDTO {
         var project = new Project();
         project.setId(this.id);
         project.setTitle(this.title);
-        project.setThumbnail(this.thumbnail.toMedia());
+        project.setThumbnail(this.thumbnail != null ? this.thumbnail.toMedia() : null);
         project.setDescription(this.description);
         project.setUrlToProject(this.urlToProject);
         project.setProfile(new Profile(this.profileId));

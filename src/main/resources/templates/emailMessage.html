@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:remove="all">New message from Blogfolio!</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<div>
+    <h2>
+        Message from <span th:text="${mailMsg.senderName}"> </span>!
+    </h2>
+    <h3>
+        Email: <span th:text="${mailMsg.senderEmail}"></span>
+    </h3>
+
+
+    Content:<br>
+    <p th:utext="${mailMsg.mailContent}"></p>
+</div>
+</body>
+</html>

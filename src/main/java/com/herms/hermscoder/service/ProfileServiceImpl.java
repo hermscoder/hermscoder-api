@@ -1,7 +1,10 @@
 package com.herms.hermscoder.service;
 
+import com.herms.hermscoder.model.dto.ExperienceDTO;
+import com.herms.hermscoder.model.dto.ProjectDTO;
 import com.herms.hermscoder.model.entity.Profile;
 import com.herms.hermscoder.model.dto.ProfileDTO;
+import com.herms.hermscoder.repository.ExperienceRepository;
 import com.herms.hermscoder.repository.ProfileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,9 +22,9 @@ public class ProfileServiceImpl implements BlogService<ProfileDTO> {
     @Autowired
     private ProfileRepository profileRepository;
     @Autowired
-    private ProjectServiceImpl projectService;
-    @Autowired
     private ExperienceServiceImpl experienceService;
+    @Autowired
+    private ProjectServiceImpl projectService;
 
     @Value("${main.profile.user.email}")
     private String mainProfileUserEmail;
@@ -45,6 +48,7 @@ public class ProfileServiceImpl implements BlogService<ProfileDTO> {
     }
 
     @Override
+    @Transactional
     public ProfileDTO findById(Long id) {
         Profile entity = profileRepository.findById(id).orElseThrow(() ->
                 new EntityNotFoundException("Profile for id " + id + " not found!"));
@@ -85,5 +89,13 @@ public class ProfileServiceImpl implements BlogService<ProfileDTO> {
         dto.setExperienceList(experienceService.findByProfileId(entity.getId()));
 
         return dto;
+    }
+
+    public ExperienceDTO addExperience(ExperienceDTO dto) {
+        return experienceService.save(dto);
+    }
+
+    public ProjectDTO addProject(ProjectDTO dto) {
+        return projectService.save(dto);
     }
 }

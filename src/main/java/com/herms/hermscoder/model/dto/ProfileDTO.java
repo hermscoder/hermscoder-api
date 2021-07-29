@@ -1,6 +1,7 @@
 package com.herms.hermscoder.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.herms.hermscoder.model.entity.Profile;
 import com.herms.hermscoder.utils.ConvertUtils;
 
@@ -25,7 +26,9 @@ public class ProfileDTO {
     @Lob
     private String description;
 
-    private boolean active;
+    @JsonIgnore
+    private Boolean active;
+
     private UserDTO user;
 
     private List<ExperienceDTO> experienceList;
@@ -58,7 +61,7 @@ public class ProfileDTO {
         profile.setBirthDate(ConvertUtils.stringToLocalDate(this.birthDate));
         profile.setJobTitle(this.jobTitle);
         profile.setDescription(this.description);
-        profile.setActive(this.active ? "Y" : "N");
+        profile.setActive(this.active == null || this.active ? "Y" : "N");
         profile.setUser(this.user.toUser());
         profile.setExperienceList(this.experienceList.stream().map(ExperienceDTO::toExperience).collect(Collectors.toList()));
         profile.setProjectsList(this.projectsList.stream().map(ProjectDTO::toProject).collect(Collectors.toList()));

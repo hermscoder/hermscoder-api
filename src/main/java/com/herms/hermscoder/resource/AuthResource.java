@@ -6,10 +6,7 @@ import com.herms.hermscoder.model.dto.UserRegistration;
 import com.herms.hermscoder.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -28,5 +25,10 @@ public class AuthResource {
     @PostMapping("/login")
     public ResponseEntity<AuthenticationResponse> login(@RequestBody AuthenticationRequest authenticationRequest) {
         return ResponseEntity.ok(authService.login(authenticationRequest));
+    }
+
+    @GetMapping("/token_refresh")
+    public ResponseEntity<AuthenticationResponse> login() {
+        return ResponseEntity.ok(authService.refreshToken());
     }
 }

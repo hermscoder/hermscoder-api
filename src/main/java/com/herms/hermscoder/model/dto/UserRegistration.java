@@ -10,6 +10,15 @@ public class UserRegistration {
     @NotNull
     private ProfileDTO profile;
 
+    public UserRegistration() {
+    }
+
+    public UserRegistration(String email, String password, ProfileDTO profile) {
+        this.email = email;
+        this.password = password;
+        this.profile = profile;
+    }
+
     public String getPassword() {
         return password;
     }

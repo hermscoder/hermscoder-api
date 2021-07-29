@@ -2,7 +2,9 @@ package com.herms.hermscoder.resource;
 
 import com.herms.hermscoder.exception.HermsCoderException;
 import com.herms.hermscoder.exception.OperationNotAuthorizedException;
+import com.herms.hermscoder.model.dto.ExperienceDTO;
 import com.herms.hermscoder.model.dto.ProfileDTO;
+import com.herms.hermscoder.model.dto.ProjectDTO;
 import com.herms.hermscoder.service.AuthService;
 import com.herms.hermscoder.service.ProfileServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +29,8 @@ public class ProfileResource {
         return ResponseEntity.ok(profileService.findAll());
     }
 
-    @GetMapping(path = "/{id}")
-    public ResponseEntity<ProfileDTO> getById(@PathVariable(value = "id") long id) {
+    @GetMapping(path = "/{profile_id}")
+    public ResponseEntity<ProfileDTO> getById(@PathVariable(value = "profile_id") long id) {
         ProfileDTO profileDTO;
         if(id == MAIN_PROFILE_IDENTIFIER) {
             profileDTO = profileService.findByMainProfile();
@@ -39,8 +41,8 @@ public class ProfileResource {
         return ResponseEntity.ok(profileDTO);
     }
 
-    @PutMapping(path = "/{id}")
-    public ResponseEntity<ProfileDTO> put(@PathVariable("id") Long id, @RequestBody ProfileDTO dto) {
+    @PutMapping(path = "/{profile_id}")
+    public ResponseEntity<ProfileDTO> put(@PathVariable("profile_id") Long id, @RequestBody ProfileDTO dto) {
 
         authService.getCurrentUser().ifPresent((currentUser) -> {
             if(dto.getUser() == null  || !currentUser.getId().equals(dto.getUser().getId())){
@@ -50,9 +52,34 @@ public class ProfileResource {
 
         return ResponseEntity.ok(profileService.update(dto));
     }
-    @DeleteMapping(path = "/{id}")
-    public ResponseEntity<Void> delete(@PathVariable("id") Long id) {
+    @DeleteMapping(path = "/{profile_id}")
+    public ResponseEntity<Void> delete(@PathVariable("profile_id") Long id) {
         profileService.delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+
+    @PostMapping(path = "/{profile_id}/experience")
+    public ResponseEntity<ExperienceDTO> addExperience(@PathVariable("profile_id") Long id, @RequestBody ExperienceDTO dto) {
+        ProfileDTO profile = profileService.findById(dto.getProfileId());
+        authService.getCurrentUser().ifPresent((currentUser) -> {
+            if(profile.getUser() == null  || !currentUser.getId().equals(profile.getUser().getId())){
+                throw new HermsCoderException("Operation not allowed");
+            }
+        });
+
+        return ResponseEntity.ok(profileService.addExperience(dto));
+    }
+
+    @PostMapping(path = "/{profile_id}/project")
+    public ResponseEntity<ProjectDTO> post(@PathVariable("profile_id") Long profileId, @RequestBody ProjectDTO dto) {
+        ProfileDTO profile = profileService.findById(dto.getProfileId());
+        authService.getCurrentUser().ifPresent((currentUser) -> {
+            if(profile.getUser() == null  || !currentUser.getId().equals(profile.getUser().getId())){
+                throw new HermsCoderException("Operation not allowed");
+            }
+        });
+
+        return ResponseEntity.ok(profileService.addProject(dto));
     }
 }
