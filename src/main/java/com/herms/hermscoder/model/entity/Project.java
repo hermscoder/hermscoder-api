@@ -15,7 +15,7 @@ public class Project {
     @NotNull
     private String title;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Media thumbnail;
 
     @NotNull

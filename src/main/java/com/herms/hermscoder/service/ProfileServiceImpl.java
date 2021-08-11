@@ -98,4 +98,8 @@ public class ProfileServiceImpl implements BlogService<ProfileDTO> {
     public ProjectDTO addProject(ProjectDTO dto) {
         return projectService.save(dto);
     }
+
+    public ProjectDTO updateProject(ProjectDTO dto){
+        return projectService.update(dto);
+    }
 }

@@ -14,7 +14,7 @@ import java.util.Optional;
 @Repository
 public interface ProjectRepository extends JpaRepository<Project, Long> {
 
-    @Query(value = "SELECT (p) FROM Project p WHERE p.profile.id = :profileId")
+    @Query(value = "SELECT (p) FROM Project p WHERE p.profile.id = :profileId ORDER BY p.id")
     List<Project> findByProfileId(Long profileId);
 
 }

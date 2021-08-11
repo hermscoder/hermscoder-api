@@ -1,6 +1,8 @@
 package com.herms.hermscoder.service;
 
+import com.herms.hermscoder.exception.HermsCoderException;
 import com.herms.hermscoder.model.dto.ProjectDTO;
+import com.herms.hermscoder.model.entity.Media;
 import com.herms.hermscoder.model.entity.Project;
 import com.herms.hermscoder.repository.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -21,6 +24,9 @@ public class ProjectServiceImpl implements BlogService<ProjectDTO> {
 
     @Autowired
     private AuthService authService;
+
+    @Autowired
+    private MediaService mediaService;
 
     @Transactional
     @Override
@@ -58,13 +64,31 @@ public class ProjectServiceImpl implements BlogService<ProjectDTO> {
     public ProjectDTO update(ProjectDTO dto) {
         var project = dto.toProject();
         if(dto.getId() == null){
-            save(dto);
+            return save(dto);
         } else {
-            projectRepository.findById(dto.getId())
+            Project entity = projectRepository.findById(dto.getId())
                     .orElseThrow(() -> new EntityNotFoundException("Project with id " + dto.getId() + " not found."));
-        }
 
-        return new ProjectDTO(projectRepository.save(project));
+            //If media changed, we need to remove the previous one from cloudinary
+            if((project.getThumbnail() !=  null && entity.getThumbnail() != null)
+                    && !project.getThumbnail().getId().equals(entity.getThumbnail().getId())) {
+                try {
+                    //remove entity.getThumbnail() from cloudinary and repository
+                    Media mediaToBedeleted = entity.getThumbnail();
+
+                    project = projectRepository.save(project);
+
+                    mediaService.deleteMedia(mediaToBedeleted);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    throw new HermsCoderException(e.getMessage());
+                }
+            } else {
+                project = projectRepository.save(project);
+            }
+        }
+        return new ProjectDTO(project);
     }
 
     @Override
