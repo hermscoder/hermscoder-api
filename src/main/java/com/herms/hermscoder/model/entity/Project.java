@@ -1,7 +1,5 @@
 package com.herms.hermscoder.model.entity;
 
-import org.hibernate.annotations.ColumnDefault;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
@@ -15,7 +13,7 @@ public class Project {
     @NotNull
     private String title;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne()
     private Media thumbnail;
 
     @NotNull

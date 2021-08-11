@@ -58,21 +58,9 @@ public class ProfileResource {
         return ResponseEntity.noContent().build();
     }
 
-
-    @PostMapping(path = "/{profile_id}/experience")
-    public ResponseEntity<ExperienceDTO> addExperience(@PathVariable("profile_id") Long id, @RequestBody ExperienceDTO dto) {
-        ProfileDTO profile = profileService.findById(dto.getProfileId());
-        authService.getCurrentUser().ifPresent((currentUser) -> {
-            if(profile.getUser() == null  || !currentUser.getId().equals(profile.getUser().getId())){
-                throw new HermsCoderException("Operation not allowed");
-            }
-        });
-
-        return ResponseEntity.ok(profileService.addExperience(dto));
-    }
-
     @PostMapping(path = "/{profile_id}/project")
-    public ResponseEntity<ProjectDTO> post(@PathVariable("profile_id") Long profileId, @RequestBody ProjectDTO dto) {
+    public ResponseEntity<ProjectDTO> post(@PathVariable("profile_id") Long profileId,
+                                           @RequestBody @Valid ProjectDTO dto) {
         ProfileDTO profile = profileService.findById(dto.getProfileId());
         authService.getCurrentUser().ifPresent((currentUser) -> {
             if(profile.getUser() == null  || !currentUser.getId().equals(profile.getUser().getId())){
@@ -84,9 +72,9 @@ public class ProfileResource {
     }
 
     @PutMapping(path = "/{profile_id}/project/{project_id}")
-    public ResponseEntity<ProjectDTO> put(@PathVariable("profile_id") Long profileId,
+    public ResponseEntity<ProjectDTO> updateProject(@PathVariable("profile_id") Long profileId,
                                           @PathVariable("project_id") Long projectId,
-                                          @RequestBody ProjectDTO dto) {
+                                          @RequestBody @Valid ProjectDTO dto) {
 
         ProfileDTO profile = profileService.findById(dto.getProfileId());
         authService.getCurrentUser().ifPresent((currentUser) -> {
@@ -95,5 +83,32 @@ public class ProfileResource {
             }
         });
         return ResponseEntity.ok(profileService.updateProject(dto));
+    }
+
+    @PostMapping(path = "/{profile_id}/experience")
+    public ResponseEntity<ExperienceDTO> addExperience(@PathVariable("profile_id") Long id,
+                                                       @RequestBody @Valid ExperienceDTO dto) {
+        ProfileDTO profile = profileService.findById(dto.getProfileId());
+        authService.getCurrentUser().ifPresent((currentUser) -> {
+            if(profile.getUser() == null  || !currentUser.getId().equals(profile.getUser().getId())){
+                throw new HermsCoderException("Operation not allowed");
+            }
+        });
+
+        return ResponseEntity.ok(profileService.addExperience(dto));
+    }
+
+    @PutMapping(path = "/{profile_id}/experience/{experience_id}")
+    public ResponseEntity<ExperienceDTO> updateExperience(@PathVariable("profile_id") Long profileId,
+                                                          @PathVariable("experience_id") Long experienceId,
+                                                          @RequestBody @Valid ExperienceDTO dto) {
+        ProfileDTO profile = profileService.findById(dto.getProfileId());
+        authService.getCurrentUser().ifPresent((currentUser) -> {
+            if(profile.getUser() == null  || !currentUser.getId().equals(profile.getUser().getId())){
+                throw new HermsCoderException("Operation not allowed");
+            }
+        });
+
+        return ResponseEntity.ok(profileService.updateExperience(dto));
     }
 }

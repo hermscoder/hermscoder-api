@@ -55,7 +55,7 @@ public class ExperienceServiceImpl implements BlogService<ExperienceDTO> {
     @Transactional
     @Override
     public ExperienceDTO update(ExperienceDTO dto) {
-        var project = dto.toExperience();
+        var experience = dto.toExperience();
         if(dto.getId() == null){
             save(dto);
         } else {
@@ -63,7 +63,7 @@ public class ExperienceServiceImpl implements BlogService<ExperienceDTO> {
                     .orElseThrow(() -> new EntityNotFoundException("Experience with id " + dto.getId() + " not found."));
         }
 
-        return new ExperienceDTO(projectRepository.save(project));
+        return new ExperienceDTO(projectRepository.save(experience));
     }
 
     @Override

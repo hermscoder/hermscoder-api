@@ -95,6 +95,10 @@ public class ProfileServiceImpl implements BlogService<ProfileDTO> {
         return experienceService.save(dto);
     }
 
+    public ExperienceDTO updateExperience(ExperienceDTO dto) {
+        return experienceService.update(dto);
+    }
+
     public ProjectDTO addProject(ProjectDTO dto) {
         return projectService.save(dto);
     }

@@ -5,17 +5,16 @@ import com.herms.hermscoder.model.entity.Profile;
 import com.herms.hermscoder.model.entity.Project;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 public class ProjectDTO {
 
-    @NotNull
     private Long id;
 
     @NotNull
     private String title;
 
-    @NotNull
     private MediaDTO thumbnail;
 
     @NotNull

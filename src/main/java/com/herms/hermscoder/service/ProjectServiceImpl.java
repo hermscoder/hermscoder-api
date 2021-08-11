@@ -1,12 +1,15 @@
 package com.herms.hermscoder.service;
 
 import com.herms.hermscoder.exception.HermsCoderException;
+import com.herms.hermscoder.model.dto.MediaDTO;
 import com.herms.hermscoder.model.dto.ProjectDTO;
 import com.herms.hermscoder.model.entity.Media;
 import com.herms.hermscoder.model.entity.Project;
 import com.herms.hermscoder.repository.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
@@ -74,18 +77,19 @@ public class ProjectServiceImpl implements BlogService<ProjectDTO> {
                     && !project.getThumbnail().getId().equals(entity.getThumbnail().getId())) {
                 try {
                     //remove entity.getThumbnail() from cloudinary and repository
-                    Media mediaToBedeleted = entity.getThumbnail();
+                    Media toBedeletedMedia = entity.getThumbnail();
 
-                    project = projectRepository.save(project);
+                    project = projectRepository.saveAndFlush(project);
 
-                    mediaService.deleteMedia(mediaToBedeleted);
+                    mediaService.deleteMedia(toBedeletedMedia.getId());
 
-                } catch (IOException e) {
+
+                } catch (Exception e) {
                     e.printStackTrace();
                     throw new HermsCoderException(e.getMessage());
                 }
             } else {
-                project = projectRepository.save(project);
+                project = projectRepository.saveAndFlush(project);
             }
         }
         return new ProjectDTO(project);
