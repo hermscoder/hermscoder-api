@@ -39,6 +39,12 @@ public class Profile {
     @OneToMany(cascade = {CascadeType.REFRESH, CascadeType.REMOVE}, orphanRemoval = true)
     private List<Project> projectsList;
 
+    private String twitter;
+
+    private String linkedIn;
+
+    private String instagram;
+
     @OneToOne
     private User user;
 
@@ -130,5 +136,29 @@ public class Profile {
 
     public void setProjectsList(List<Project> projectsList) {
         this.projectsList = projectsList;
+    }
+
+    public String getTwitter() {
+        return twitter;
+    }
+
+    public void setTwitter(String twitter) {
+        this.twitter = twitter;
+    }
+
+    public String getLinkedIn() {
+        return linkedIn;
+    }
+
+    public void setLinkedIn(String linkedIn) {
+        this.linkedIn = linkedIn;
+    }
+
+    public String getInstagram() {
+        return instagram;
+    }
+
+    public void setInstagram(String instagram) {
+        this.instagram = instagram;
     }
 }

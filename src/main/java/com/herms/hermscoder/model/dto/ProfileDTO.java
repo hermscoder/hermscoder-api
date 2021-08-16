@@ -35,6 +35,12 @@ public class ProfileDTO {
 
     private List<ProjectDTO> projectsList;
 
+    private String twitter;
+
+    private String linkedIn;
+
+    private String instagram;
+
     public ProfileDTO(){
         experienceList = new ArrayList<>();
         projectsList = new ArrayList<>();
@@ -51,6 +57,9 @@ public class ProfileDTO {
         this.experienceList = profile.getExperienceList().stream().map(ExperienceDTO::new).collect(Collectors.toList());
         this.projectsList = profile.getProjectsList().stream().map(ProjectDTO::new).collect(Collectors.toList());
         this.user = new UserDTO(profile.getUser());
+        this.twitter = profile.getTwitter();
+        this.linkedIn = profile.getLinkedIn();
+        this.instagram = profile.getInstagram();
     }
 
     public Profile toProfile(){
@@ -65,6 +74,9 @@ public class ProfileDTO {
         profile.setUser(this.user.toUser());
         profile.setExperienceList(this.experienceList.stream().map(ExperienceDTO::toExperience).collect(Collectors.toList()));
         profile.setProjectsList(this.projectsList.stream().map(ProjectDTO::toProject).collect(Collectors.toList()));
+        profile.setTwitter(this.twitter);
+        profile.setLinkedIn(this.linkedIn);
+        profile.setInstagram(this.instagram);
         return profile;
     }
 
@@ -146,5 +158,29 @@ public class ProfileDTO {
 
     public void setProjectsList(List<ProjectDTO> projectsList) {
         this.projectsList = projectsList;
+    }
+
+    public String getTwitter() {
+        return twitter;
+    }
+
+    public void setTwitter(String twitter) {
+        this.twitter = twitter;
+    }
+
+    public String getLinkedIn() {
+        return linkedIn;
+    }
+
+    public void setLinkedIn(String linkedIn) {
+        this.linkedIn = linkedIn;
+    }
+
+    public String getInstagram() {
+        return instagram;
+    }
+
+    public void setInstagram(String instagram) {
+        this.instagram = instagram;
     }
 }

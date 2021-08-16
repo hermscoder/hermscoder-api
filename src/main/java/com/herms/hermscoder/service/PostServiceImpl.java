@@ -1,18 +1,23 @@
 package com.herms.hermscoder.service;
 
-import com.herms.hermscoder.model.dto.UserDTO;
+import com.herms.hermscoder.exception.HermsCoderException;
+import com.herms.hermscoder.model.dto.SharePostContentDTO;
 import com.herms.hermscoder.model.entity.Post;
 import com.herms.hermscoder.model.dto.PostDTO;
+import com.herms.hermscoder.model.linkedin.*;
 import com.herms.hermscoder.repository.PostRepository;
+import com.herms.hermscoder.service.integration.SharePostService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
+import org.yaml.snakeyaml.util.UriEncoder;
 
 import javax.persistence.EntityNotFoundException;
-import java.nio.file.attribute.UserPrincipalNotFoundException;
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,6 +28,9 @@ public class PostServiceImpl implements BlogService<PostDTO> {
 
     @Autowired
     private AuthService authService;
+
+    @Autowired
+    private SharePostService sharePostService;
 
     @Transactional
     @Override
@@ -75,5 +83,7 @@ public class PostServiceImpl implements BlogService<PostDTO> {
         postRepository.deleteById(id);
     }
 
-
+    public PostShareResponse sharePostOnLinkedin(Long postId, SharePostContentDTO sharePostContent) {
+        return sharePostService.sharePostOnLinkedin(postId, sharePostContent);
+    }
 }

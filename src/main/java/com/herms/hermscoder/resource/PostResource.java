@@ -1,6 +1,8 @@
 package com.herms.hermscoder.resource;
 
 import com.herms.hermscoder.model.dto.PostDTO;
+import com.herms.hermscoder.model.dto.SharePostContentDTO;
+import com.herms.hermscoder.model.linkedin.PostShareResponse;
 import com.herms.hermscoder.service.PostServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -38,5 +40,10 @@ public class PostResource {
     public ResponseEntity<Void> delete(@PathVariable("id") Long id) {
         postService.delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping(path = "/{id}/share/linkedin")
+    public ResponseEntity<PostShareResponse> sharePostOnLinkedin(@PathVariable("id") Long postId, @RequestBody SharePostContentDTO sharePostContent) {
+        return ResponseEntity.ok(postService.sharePostOnLinkedin(postId, sharePostContent));
     }
 }

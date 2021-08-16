@@ -23,6 +23,8 @@ public class PostDTO {
     @NotBlank
     private String text;
 
+    private String thumbnail = "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwohnungnein.icu%2Fzcdooy%2F3rdaBj4bVgNOfurQhUUuAgHaEI.jpg&f=1&nofb=1";
+
     public PostDTO(){}
 
     public PostDTO(Post post){
@@ -101,5 +103,13 @@ public class PostDTO {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public String getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
     }
 }

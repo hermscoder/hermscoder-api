@@ -7,7 +7,10 @@ import com.herms.hermscoder.utils.Utils;
 public class UserDTO {
     private Long id;
     private String name;
+    //Profile related fields
     private String jobTitle;
+    private String linkedIn;
+    private String instagram;
 
     public UserDTO() {
     }
@@ -18,6 +21,8 @@ public class UserDTO {
         if(profile != null) {
             this.name = Utils.joinStrings(profile.getGivenName(), " ", profile.getFamilyName()).trim();
             this.jobTitle = profile.getJobTitle();
+            this.linkedIn = profile.getLinkedIn();
+            this.instagram = profile.getInstagram();
         }
     }
 
@@ -50,5 +55,21 @@ public class UserDTO {
 
     public void setJobTitle(String jobTitle) {
         this.jobTitle = jobTitle;
+    }
+
+    public String getLinkedIn() {
+        return linkedIn;
+    }
+
+    public void setLinkedIn(String linkedIn) {
+        this.linkedIn = linkedIn;
+    }
+
+    public String getInstagram() {
+        return instagram;
+    }
+
+    public void setInstagram(String instagram) {
+        this.instagram = instagram;
     }
 }
