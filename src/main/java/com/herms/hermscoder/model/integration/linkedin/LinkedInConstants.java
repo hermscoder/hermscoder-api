@@ -1,6 +1,4 @@
-package com.herms.hermscoder.model.linkedin;
-
-import java.net.URI;
+package com.herms.hermscoder.model.integration.linkedin;
 
 public class LinkedInConstants {
 

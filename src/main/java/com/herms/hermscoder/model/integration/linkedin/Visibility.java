@@ -1,6 +1,5 @@
-package com.herms.hermscoder.model.linkedin;
+package com.herms.hermscoder.model.integration.linkedin;
 
-import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Visibility {

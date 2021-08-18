@@ -3,7 +3,7 @@ package com.herms.hermscoder.service.integration;
 import com.herms.hermscoder.exception.HermsCoderException;
 import com.herms.hermscoder.model.dto.PostDTO;
 import com.herms.hermscoder.model.dto.SharePostContentDTO;
-import com.herms.hermscoder.model.linkedin.*;
+import com.herms.hermscoder.model.integration.linkedin.*;
 import com.herms.hermscoder.service.PostServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -87,7 +87,7 @@ public class SharePostService {
                                 new ShareCommentary(sharePostContent.getCommentaryText()),
                                 Arrays.asList(
                                         new LinkedinMedia(sharePostContent.getPostUrl(),
-                                                Arrays.asList(new Thumbnails(post.getThumbnail())),
+                                                Arrays.asList(new Thumbnails(post.getThumbnail().getUrl())),
                                                 new Title(post.getTitle()))))));
         linkedInPostInformationDTO.setVisibility(new Visibility());
         return linkedInPostInformationDTO;

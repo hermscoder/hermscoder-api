@@ -28,9 +28,17 @@ public class Post {
 
     private Integer readingTime;
 
+    @OneToOne
+    private Media thumbnail;
+
     @NotBlank
     @Lob
     private String text;
+
+    private String keyWords;
+
+    public Post() {
+    }
 
     public Long getId() {
         return id;
@@ -86,5 +94,21 @@ public class Post {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public Media getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(Media thumbnail) {
+        this.thumbnail = thumbnail;
+    }
+
+    public String getKeyWords() {
+        return keyWords;
+    }
+
+    public void setKeyWords(String keyWords) {
+        this.keyWords = keyWords;
     }
 }

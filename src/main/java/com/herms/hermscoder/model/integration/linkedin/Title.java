@@ -1,12 +1,12 @@
-package com.herms.hermscoder.model.linkedin;
+package com.herms.hermscoder.model.integration.linkedin;
 
-public class ShareCommentary {
+public class Title {
     private String text;
 
-    public ShareCommentary() {
+    public Title() {
     }
 
-    public ShareCommentary(String text) {
+    public Title(String text) {
         this.text = text;
     }
 

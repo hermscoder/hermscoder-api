@@ -65,7 +65,9 @@ public class MediaService {
         deleteMedia(toBeDeleted);
     }
     public void deleteMedia(Media media) throws IOException {
-        cloudinaryManager.getCloudinaryInstance().uploader().destroy(media.getPublicId(), ObjectUtils.emptyMap());
+        if(media.getPublicId() != null) {
+            cloudinaryManager.getCloudinaryInstance().uploader().destroy(media.getPublicId(), ObjectUtils.emptyMap());
+        }
         mediaRepository.delete(media.getId());
     }
 }

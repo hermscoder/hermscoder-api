@@ -23,7 +23,9 @@ public class PostDTO {
     @NotBlank
     private String text;
 
-    private String thumbnail = "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwohnungnein.icu%2Fzcdooy%2F3rdaBj4bVgNOfurQhUUuAgHaEI.jpg&f=1&nofb=1";
+    private MediaDTO thumbnail;
+
+    private String keyWords;
 
     public PostDTO(){}
 
@@ -35,6 +37,8 @@ public class PostDTO {
         this.subTitle = post.getSubTitle();
         this.readingTime = post.getReadingTime();
         this.text = post.getText();
+        this.thumbnail = post.getThumbnail() != null ? new MediaDTO(post.getThumbnail()) : null;
+        this.keyWords = post.getKeyWords();
     }
 
     public Post toPost() {
@@ -46,6 +50,8 @@ public class PostDTO {
         post.setReadingTime(this.readingTime);
         post.setSubTitle(this.subTitle);
         post.setText(this.text);
+        post.setThumbnail(this.thumbnail != null ? this.thumbnail.toMedia() : null);
+        post.setKeyWords(this.keyWords);
         return post;
     }
 
@@ -105,11 +111,19 @@ public class PostDTO {
         this.text = text;
     }
 
-    public String getThumbnail() {
+    public MediaDTO getThumbnail() {
         return thumbnail;
     }
 
-    public void setThumbnail(String thumbnail) {
+    public void setThumbnail(MediaDTO thumbnail) {
         this.thumbnail = thumbnail;
+    }
+
+    public String getKeyWords() {
+        return keyWords;
+    }
+
+    public void setKeyWords(String keyWords) {
+        this.keyWords = keyWords;
     }
 }

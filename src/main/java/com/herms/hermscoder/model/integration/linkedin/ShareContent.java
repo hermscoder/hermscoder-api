@@ -1,4 +1,4 @@
-package com.herms.hermscoder.model.linkedin;
+package com.herms.hermscoder.model.integration.linkedin;
 
 import java.util.List;
 
