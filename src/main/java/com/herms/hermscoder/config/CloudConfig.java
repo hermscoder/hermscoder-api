@@ -3,23 +3,30 @@ package com.herms.hermscoder.config;
 import com.herms.hermscoder.model.cloudinary.CloudinaryManager;
 import com.herms.hermscoder.model.cloudinary.CloudinarySettings;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.core.env.Environment;
 
 @Configuration
-@PropertySource("classpath:cloud.properties")
+//@PropertySource("classpath:cloud.properties")
 public class CloudConfig {
-    @Autowired
-    private Environment env;
+
+
+    @Value("${cloud.cloudName}")
+    private String cloudName;
+    @Value("${cloud.apiKey}")
+    private String apiKey;
+    @Value("${cloud.apiSecret}")
+    private String apiSecret;
+
 
     @Bean
     public CloudinaryManager cloudinarySettings() {
         CloudinarySettings cs = new CloudinarySettings();
-        cs.setCloudName(env.getProperty("cloud.cloudName"));
-        cs.setApiKey(env.getProperty("cloud.apiKey"));
-        cs.setApiSecret(env.getProperty("cloud.apiSecret"));
+        cs.setCloudName(cloudName);
+        cs.setApiKey(apiKey);
+        cs.setApiSecret(apiSecret);
         return new CloudinaryManager(cs);
     }
 }
