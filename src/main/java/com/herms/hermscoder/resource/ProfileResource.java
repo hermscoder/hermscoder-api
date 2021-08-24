@@ -112,31 +112,4 @@ public class ProfileResource {
         return ResponseEntity.ok(profileService.updateExperience(dto));
     }
 
-    @PutMapping(path = "/{profile_id}/project/{project_id}")
-    public ResponseEntity<ProjectDTO> put(@PathVariable("profile_id") Long profileId,
-                                          @PathVariable("project_id") Long projectId,
-                                          @RequestBody ProjectDTO dto) {
-
-        ProfileDTO profile = profileService.findById(dto.getProfileId());
-        authService.getCurrentUser().ifPresent((currentUser) -> {
-            if(profile.getUser() == null  || !currentUser.getId().equals(profile.getUser().getId())){
-                throw new HermsCoderException("Operation not allowed");
-            }
-        });
-        return ResponseEntity.ok(profileService.updateProject(dto));
-    }
-
-    @PutMapping(path = "/{profile_id}/project/{project_id}")
-    public ResponseEntity<ProjectDTO> put(@PathVariable("profile_id") Long profileId,
-                                          @PathVariable("project_id") Long projectId,
-                                          @RequestBody ProjectDTO dto) {
-
-        ProfileDTO profile = profileService.findById(dto.getProfileId());
-        authService.getCurrentUser().ifPresent((currentUser) -> {
-            if(profile.getUser() == null  || !currentUser.getId().equals(profile.getUser().getId())){
-                throw new HermsCoderException("Operation not allowed");
-            }
-        });
-        return ResponseEntity.ok(profileService.updateProject(dto));
-    }
 }
