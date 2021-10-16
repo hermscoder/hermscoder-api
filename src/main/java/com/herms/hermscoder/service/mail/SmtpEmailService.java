@@ -22,9 +22,9 @@ public class SmtpEmailService extends AbstractEmailService {
 
     @Override
     public void sendEmailMessage(SimpleMailMessage msg) {
-        LOGGER.info("Simulando envio de email...");
+        LOGGER.info("Sending email...");
         mailSender.send(msg);
-        LOGGER.info("Email enviado");
+        LOGGER.info("Email sent!");
     }
 
     @Override
